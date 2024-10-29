@@ -1,0 +1,31 @@
+version: '3'
+services:
+  server:
+    container_name: server-ppp
+    build: 
+      context: ./server-dir
+    volumes:
+      - ./server-dir:/root
+    restart: always
+    networks:
+      rust-network:
+        ipv4_address: 10.135.64.69
+
+  client:
+    container_name: client-ppp
+    build: 
+      context: ./client-dir
+    volumes:
+      - ./client-dir:/root
+    restart: always
+    networks:
+      rust-network:
+        ipv4_address: 10.135.64.21
+
+networks:
+  rust-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.135.64.0/24
+          gateway: 10.135.64.1
